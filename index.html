@@ -1,0 +1,106 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch Web Application</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #222;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      background: #333;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    }
+    #time {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    button {
+      background: #0c7;
+      color: #fff;
+      border: none;
+      padding: 1rem 2rem;
+      margin: 0 0.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #087;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Stopwatch</h1>
+    <div id="time">
+      <span id="hr">00</span> :
+      <span id="min">00</span> :
+      <span id="sec">00</span> .
+      <span id="ms">00</span>
+    </div>
+    <div id="buttons">
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+      <button id="reset">Reset</button>
+    </div>
+  </div>
+  <script>
+    let hr = 0, min = 0, sec = 0, ms = 0;
+    let timer = false;
+
+    document.getElementById('start').onclick = function() {
+      timer = true;
+      stopwatch();
+    };
+
+    document.getElementById('stop').onclick = function() {
+      timer = false;
+    };
+
+    document.getElementById('reset').onclick = function() {
+      timer = false;
+      hr = 0; min = 0; sec = 0; ms = 0;
+      displayTime();
+    };
+
+    function stopwatch() {
+      if(timer) {
+        ms++;
+        if(ms == 100) {
+          ms = 0;
+          sec++;
+        }
+        if(sec == 60) {
+          sec = 0;
+          min++;
+        }
+        if(min == 60) {
+          min = 0;
+          hr++;
+        }
+        displayTime();
+        setTimeout(stopwatch, 10);
+      }
+    }
+
+    function displayTime() {
+      document.getElementById('hr').innerText = hr < 10 ? '0' + hr : hr;
+      document.getElementById('min').innerText = min < 10 ? '0' + min : min;
+      document.getElementById('sec').innerText = sec < 10 ? '0' + sec : sec;
+      document.getElementById('ms').innerText = ms < 10 ? '0' + ms : ms;
+    }
+  </script>
+</body>
+</html>
